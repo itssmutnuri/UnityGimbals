@@ -29,6 +29,7 @@ public class Controller : MonoBehaviour
 
     readonly float sensitivity = 10f;
     readonly string gimbalTag = "Gimbal";
+    readonly string defaultStatus = "No Mode Selected";
 
     private void Start()
     {
@@ -56,6 +57,8 @@ public class Controller : MonoBehaviour
                 gimbalRenderers.Add(gimbalRenderer);
             }
         }
+
+        currentModeText.text = defaultStatus;
     }
 
     private void Update()
@@ -117,6 +120,8 @@ public class Controller : MonoBehaviour
             }
             // make everything default (translucent)
             SetDefaultMaterial();
+
+            currentModeText.text = defaultStatus;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -167,7 +172,7 @@ public class Controller : MonoBehaviour
         return vector;
     }
 
-    // make sure everything is set to default
+    // make sure gimbal materials are set to default
     private void SetDefaultMaterial()
     {
         foreach (Renderer gimbalRenderer in gimbalRenderers)
@@ -179,13 +184,15 @@ public class Controller : MonoBehaviour
         }
     }
 
-    // reset the cubes transforms.
+    // reset the cubes transforms and set to default.
     public void ResetPlayable()
     {
         print("resetting cube");
         target.position = initPosition;
         target.rotation = initRotation;
         target.localScale = initScale;
+
+        currentModeText.text = defaultStatus;
 
         SetDefaultMaterial();
     }
